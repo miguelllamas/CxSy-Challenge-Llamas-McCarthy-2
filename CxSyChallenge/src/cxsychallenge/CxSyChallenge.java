@@ -7,6 +7,7 @@ import java.util.Random;
  * CxSy Challenge
  * @author Miggy Llamas, Tadhg McCarthy
  */
+
 public class CxSyChallenge {
 
     public static void main(String[] args) {
@@ -20,13 +21,25 @@ public class CxSyChallenge {
         pools[0] = new ArrayList<Integer>();
         pools[1] = new ArrayList<Integer>();
         pools[2] = new ArrayList<Integer>();
-//        int[] poolsCurrentPayoff = new int[3];
             
         float stableEarnings = 1;
         float highEarnings = 0;
         float lowEarnings = 0;
+        int stableCount = 0;
+        int highCount = 0;
+        int lowCount = 0;
+        int[] stableAllCounts = new int[100];
+        int[] highAllCounts = new int[100];
+        int[] lowAllCounts = new int[100];
+//        float[] stableAllEarnings = new float[100];
+//        float[] highAllEarnings = new float[100];
+//        float[] lowAllEarnings = new float[100];
+        
+        ArrayList<Float> stableAllEarnings = new ArrayList<Float>();
+        ArrayList<Float> highAllEarnings = new ArrayList<Float>();
+        ArrayList<Float> lowAllEarnings = new ArrayList<Float>();
                 
-        int tau = 5;
+        int tau = 2;
         Random rand = new Random();
         
         // setup
@@ -35,7 +48,7 @@ public class CxSyChallenge {
         }
         
         // 100 timesteps
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 100; i++) {            
             pools[0].clear();
             pools[1].clear();
             pools[2].clear();
@@ -47,12 +60,39 @@ public class CxSyChallenge {
                 }
                 else {
                     if(agentsCurrentEarnings[j] >= tau) {
-                        agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
-                        agentsCurrentPools[j] = rand.nextInt(3);
+                        if(rand.nextInt(100) < 75) {
+                            int temp = agentsCurrentPools[j];
+//                            float leastAgents = Math.min(Math.min(averageArray(stableAllCounts), averageArray(highAllCounts)), averageArray(lowAllCounts));                            
+                            float highestEarnings = Math.max(Math.max(averageFloatArray(stableAllEarnings), averageFloatArray(highAllEarnings)), averageFloatArray(lowAllEarnings));                            
+                            if(highestEarnings == averageFloatArray(stableAllEarnings)) {
+                                agentsCurrentPools[j] = 0;
+                            }
+                            else if(highestEarnings == averageFloatArray(highAllEarnings)) {
+                                agentsCurrentPools[j] = 1;
+                            }
+                            else {
+                                agentsCurrentPools[j] = 2;
+                            }
+                            
+                            if(temp != agentsCurrentPools[j]) {                                
+                                agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
+                            }
+                        }
+                        else {
+                            int temp = rand.nextInt(3);
+                            if(temp != agentsCurrentPools[j]) {                                
+                                agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
+                            }                                    
+                            agentsCurrentPools[j] = temp;
+                        }
                     }
                 }
                 pools[agentsCurrentPools[j]].add(j);
             }
+            
+            stableAllCounts[i] = pools[0].size();
+            highAllCounts[i] = pools[1].size();
+            lowAllCounts[i] = pools[2].size();
             
             // agent earns based on selected pool
             for(int j = 0; j < 50; j++) {       
@@ -82,6 +122,10 @@ public class CxSyChallenge {
                 }
             }
             
+            stableAllEarnings.add(stableEarnings);
+            highAllEarnings.add(highEarnings);
+            lowAllEarnings.add(lowEarnings);
+            
             // summary
             System.out.println("Timestep " + (i + 1));
             System.out.println("Stable: " + pools[0]);
@@ -97,4 +141,26 @@ public class CxSyChallenge {
             System.out.println("\n ----------");
         }        
     }    
+    
+    private static float averageFloatArray(ArrayList<Float> array) {
+        int sum = 0;
+        for (int i = 0; i < array.size(); i++) {
+            sum += array.get(i);
+        }
+        float average = sum / (float)array.size();
+//        System.out.print(array.size() + " ");
+//        System.out.print(average + " ");
+        return average;
+    }    
+    
+    private static float averageIntegerArray(ArrayList<Integer> array) {
+        int sum = 0;
+        for (int i = 0; i < array.size(); i++) {
+            sum += array.get(i);
+        }
+        float average = sum / (float)array.size();
+//        System.out.print(array.size() + " ");
+//        System.out.print(average + " ");
+        return average;
+    }
 }
