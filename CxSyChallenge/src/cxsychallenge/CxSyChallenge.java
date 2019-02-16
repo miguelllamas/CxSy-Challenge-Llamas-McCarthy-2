@@ -69,7 +69,8 @@ public class CxSyChallenge {
         //Uncomment the algo you want to try
         
         //SelectHighestAverageEarningsRandom();
-        SelectHighestAverageEarnings();
+        //SelectHighestAverageEarnings();
+        SelectRandomPools();
                 
     }
 
@@ -80,6 +81,64 @@ public class CxSyChallenge {
     //end miggys algos here
     
     //tadhg algos here
+    
+    //Agents pick pools randomly\
+    
+    private static void SelectRandomPools(){
+        for(int i = 0; i < 100; i++){
+            pools[0].clear();
+            pools[1].clear();
+            pools[2].clear();
+            
+            for(int j = 0; j < 50; j++){
+                //pick random pool if they have enough money
+                if(i == 0){
+                    agentsCurrentPools[j] = rand.nextInt(3);
+                }else if(agentsCurrentEarnings[j] >= 2){
+                    agentsCurrentPools[j] = rand.nextInt(3);
+                }
+                pools[agentsCurrentPools[j]].add(j);
+            }
+            
+            //money earned based on chosen pool
+            for(int j = 0; j < 50; j++){
+                //stable pool
+                if(agentsCurrentPools[j] == 0){
+                    agentsCurrentEarnings[j] += stableEarnings;
+                }else if(agentsCurrentPools[j] == 1){
+                    if(rand.nextInt(100) > 25) {
+                        highEarnings = 80 / (float)pools[1].size();
+                    }
+                    else {
+                        highEarnings = 0;
+                    }                    
+                    agentsCurrentEarnings[j] += highEarnings;
+                }else{
+                    if(rand.nextInt(100) > 50) {
+                        lowEarnings = 40 / (float)pools[2].size();
+                    }
+                    else {
+                        lowEarnings = 0;
+                    }                   
+                    agentsCurrentEarnings[j] += lowEarnings;
+                }
+            }
+            
+            // summary
+            System.out.println("Timestep " + (i + 1));
+            System.out.println("Stable: " + pools[0]);
+            System.out.println("Earnings: $" + String.format("%.02f", stableEarnings));
+            System.out.println("High: " + pools[1]);
+            System.out.println("Earnings: $" + String.format("%.02f", highEarnings));
+            System.out.println("Low: " + pools[2]);
+            System.out.println("Earnings: $" + String.format("%.02f", lowEarnings));            
+            System.out.println("Agents' current earnings: ");
+            for(int j = 0; j < 50; j++) {                
+                System.out.print(j + ": $" + agentsCurrentEarnings[j] + ", ");
+            }           
+            System.out.println("\n ----------");
+        }
+    }
     
     //end tadhgs algos here
     
