@@ -67,9 +67,9 @@ public class CxSyChallenge {
         //tadhg end main here
         
         // Uncomment algorithm to be tested        
-        SelectHighestAverageEarnings();
-//        SelectHighestAverageEarningsOrRandom();
-//        SelectRandomPools();
+        //SelectHighestAverageEarnings();
+        //SelectHighestAverageEarningsOrRandom();
+        SelectRandomPools();
                 
     }
 
@@ -172,7 +172,7 @@ public class CxSyChallenge {
     
     //tadhg algos here
     
-    //Agents pick pools randomly\
+    //Agents pick pools randomly
     
     private static void SelectRandomPools(){
         for(int i = 0; i < 100; i++){
@@ -191,12 +191,13 @@ public class CxSyChallenge {
             }
             
             //money earned based on chosen pool
+            int random = rand.nextInt(100);
             for(int j = 0; j < 50; j++){
                 //stable pool
                 if(agentsCurrentPools[j] == 0){
                     agentsCurrentEarnings[j] += stableEarnings;
                 }else if(agentsCurrentPools[j] == 1){
-                    if(rand.nextInt(100) > 25) {
+                    if(random > 25) {
                         highEarnings = 80 / (float)pools[1].size();
                     }
                     else {
@@ -204,7 +205,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += highEarnings;
                 }else{
-                    if(rand.nextInt(100) > 50) {
+                    if(random > 50) {
                         lowEarnings = 40 / (float)pools[2].size();
                     }
                     else {
