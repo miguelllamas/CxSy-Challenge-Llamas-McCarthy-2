@@ -38,6 +38,14 @@ public class CxSyChallenge {
     //cost for moving
     private static int tau = 2;
     private static Random rand = new Random();
+    
+    //miggys var here
+    
+    //miggys end var here
+    
+    //tadhg var here
+    
+    //tadhg end var here
 
     public static void main(String[] args) {
         
@@ -50,6 +58,14 @@ public class CxSyChallenge {
             agentsCurrentEarnings[i] = 0;
         }
         
+        //miggy main here
+        
+        //miggy end main here
+        
+        //tadhg main here
+        
+        //tadhg end main here
+        
         //Uncomment the algo you want to try
         
         //SelectHighestAverageEarningsRandom();
@@ -58,6 +74,14 @@ public class CxSyChallenge {
     }
 
     //DIFFERENT ALGOS START HERE
+    
+    //miggys algos here
+    
+    //end miggys algos here
+    
+    //tadhg algos here
+    
+    //end tadhgs algos here
     
     //Agents look at the total average earnings of each pool and selects the pool with the highest average.
     private static void SelectHighestAverageEarnings(){
