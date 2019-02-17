@@ -46,19 +46,232 @@ public class CxSyChallenge {
         }        
         
         // run algorithm 5 times
-        for(int i = 0; i < 5; i++) {
-//            uncomment algorithm to be tested        
+        for(int i = 0; i < 1; i++) {
+//            uncomment algorithm to be tested 
+//            SelectLeastAgents();
+            SelectLeastAgentsOrRandom();
 //            SelectLowestAverageAgents();
 //            SelectLowestAverageAgentsOrRandom();
 //            SelectHighestAverageEarnings();
 //            SelectHighestAverageEarningsOrRandom();
-            SelectRandomPools();            
+//            SelectRandomPools();            
         }
                 
     }
 
-//    algorithm methods    
-    // A. agents look at average agents in each pool over all previous timesteps and select pool with lowest average
+//    algorithm methods            
+    // agents choose pool with least agents at the end of the immediately preceding timestep
+        private static void SelectLeastAgents() {
+        // 100 timesteps
+        for(int i = 0; i < 100; i++) {
+            // temporarily variables for number of agents in each pool at the end of preceding timestep
+            float tempStableSize = pools[0].size();
+            float tempHighSize = pools[1].size();
+            float tempLowSize = pools[2].size();
+            
+            pools[0].clear();
+            pools[1].clear();
+            pools[2].clear();
+            
+            // agent selects pool
+            for(int j = 0; j < 50; j++) {                
+                if(i == 0) {
+                    agentsCurrentPools[j] = rand.nextInt(3);
+                }
+                else {
+                    if(agentsCurrentEarnings[j] >= tau) {
+                        int temp = agentsCurrentPools[j];                           
+                        float leastAgents = Math.min(Math.min(tempStableSize, tempHighSize), tempLowSize);
+                        ArrayList<Integer> tempList = new ArrayList<Integer>();
+                        if(leastAgents == tempStableSize) {
+                            tempList.add(0);
+                            agentsCurrentPools[j] = 0;
+                        }
+                        else if(leastAgents == tempHighSize) {
+                            tempList.add(1);
+                            agentsCurrentPools[j] = 1;
+                        }
+                        else {
+                            tempList.add(2);
+                            agentsCurrentPools[j] = 2;
+                        }
+                        
+                        // if two pools are tied for having the least agents
+                        if(tempList.size() == 2) {
+                            if(rand.nextInt(100) < 50) {
+                                agentsCurrentPools[j] = tempList.get(0);
+                            }
+                            else {
+                                agentsCurrentPools[j] = tempList.get(1);
+                            }
+                        }
+
+                        if(temp != agentsCurrentPools[j]) {                                
+                            agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
+                        }
+                    }
+                }
+                pools[agentsCurrentPools[j]].add(j);
+            }            
+            
+            // agent earns based on selected pool
+            int random = rand.nextInt(100);
+            for(int j = 0; j < 50; j++) {       
+                // stable pool
+                if(agentsCurrentPools[j] == 0) {
+                    agentsCurrentEarnings[j] += stableEarnings;
+                }
+                // high pool
+                else if(agentsCurrentPools[j] == 1) {
+                    if(random > 25) {
+                        highEarnings = 80 / (float)pools[1].size();
+                    }
+                    else {
+                        highEarnings = 0;
+                    }                    
+                    agentsCurrentEarnings[j] += highEarnings;
+                }
+                // low pool
+                else {
+                    if(random > 50) {
+                        lowEarnings = 40 / (float)pools[2].size();
+                    }
+                    else {
+                        lowEarnings = 0;
+                    }                    
+                    agentsCurrentEarnings[j] += lowEarnings;
+                }
+            }
+            
+            // summary
+            System.out.println("Timestep " + (i + 1));
+            System.out.println("Stable: " + pools[0]);
+            System.out.println("Earnings: $" + String.format("%.02f", stableEarnings));
+            System.out.println("High: " + pools[1]);
+            System.out.println("Earnings: $" + String.format("%.02f", highEarnings));
+            System.out.println("Low: " + pools[2]);
+            System.out.println("Earnings: $" + String.format("%.02f", lowEarnings));            
+            System.out.println("Agents' current earnings: ");
+            for(int j = 0; j < 50; j++) {                
+                System.out.print(j + ": $" + String.format("%.02f", agentsCurrentEarnings[j]) + ", ");
+            }           
+            System.out.println("\n ----------");
+        }
+    }        
+    
+    // similar to preceding algorithm, but agents have a 25% chance of picking a random pool
+    private static void SelectLeastAgentsOrRandom() {
+        // 100 timesteps
+        for(int i = 0; i < 100; i++) {            
+            // temporarily variables for number of agents in each pool at the end of preceding timestep
+            float tempStableSize = pools[0].size();
+            float tempHighSize = pools[1].size();
+            float tempLowSize = pools[2].size();
+            
+            pools[0].clear();
+            pools[1].clear();
+            pools[2].clear();
+            
+            // agent selects pool
+            for(int j = 0; j < 50; j++) {                
+                if(i == 0) {
+                    agentsCurrentPools[j] = rand.nextInt(3);
+                }
+                else {
+                    if(agentsCurrentEarnings[j] >= tau) {
+                        if(rand.nextInt(100) < 75) {                            
+                            int temp = agentsCurrentPools[j];                           
+                            float leastAgents = Math.min(Math.min(tempStableSize, tempHighSize), tempLowSize);
+                            ArrayList<Integer> tempList = new ArrayList<Integer>();
+                            if(leastAgents == tempStableSize) {
+                                tempList.add(0);
+                                agentsCurrentPools[j] = 0;
+                            }
+                            else if(leastAgents == tempHighSize) {
+                                tempList.add(1);
+                                agentsCurrentPools[j] = 1;
+                            }
+                            else {
+                                tempList.add(2);
+                                agentsCurrentPools[j] = 2;
+                            }
+
+                            // if two pools are tied for having the least agents
+                            if(tempList.size() == 2) {
+                                if(rand.nextInt(100) < 50) {
+                                    agentsCurrentPools[j] = tempList.get(0);
+                                }
+                                else {
+                                    agentsCurrentPools[j] = tempList.get(1);
+                                }
+                            }
+
+                            if(temp != agentsCurrentPools[j]) {                                
+                                agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
+                            }                            
+                        }
+                        else {
+                            int temp = rand.nextInt(3);
+                            if(temp != agentsCurrentPools[j]) {                                
+                                agentsCurrentEarnings[j] = agentsCurrentEarnings[j] - tau;
+                            }                                    
+                            agentsCurrentPools[j] = temp;
+                        }
+                    }
+                }
+                pools[agentsCurrentPools[j]].add(j);
+            }
+            
+            // agent earns based on selected pool
+            int random = rand.nextInt(100);
+            for(int j = 0; j < 50; j++) {       
+                // stable pool
+                if(agentsCurrentPools[j] == 0) {
+                    agentsCurrentEarnings[j] += stableEarnings;
+                }
+                // high pool
+                else if(agentsCurrentPools[j] == 1) {
+                    if(random > 25) {
+                        highEarnings = 80 / (float)pools[1].size();
+                    }
+                    else {
+                        highEarnings = 0;
+                    }                    
+                    agentsCurrentEarnings[j] += highEarnings;
+                }
+                // low pool
+                else {
+                    if(random > 50) {
+                        lowEarnings = 40 / (float)pools[2].size();
+                    }
+                    else {
+                        lowEarnings = 0;
+                    }                    
+                    agentsCurrentEarnings[j] += lowEarnings;
+                }
+            }
+            
+            stableAllEarnings.add(stableEarnings);
+            highAllEarnings.add(highEarnings);
+            lowAllEarnings.add(lowEarnings);
+            
+            // summary
+            System.out.println("Timestep " + (i + 1));
+            System.out.println("Stable: " + pools[0]);
+            System.out.println("Earnings: $" + String.format("%.02f", stableEarnings));
+            System.out.println("High: " + pools[1]);
+            System.out.println("Earnings: $" + String.format("%.02f", highEarnings));
+            System.out.println("Low: " + pools[2]);
+            System.out.println("Earnings: $" + String.format("%.02f", lowEarnings));            
+            System.out.println("Agents' current earnings: ");
+            for(int j = 0; j < 50; j++) {                
+                System.out.print(j + ": $" + String.format("%.02f", agentsCurrentEarnings[j]) + ", ");
+            }           
+            System.out.println("\n ----------");
+        }
+    }        
+    
+    // agents look at average agents in each pool over all previous timesteps and select pool with lowest average
         private static void SelectLowestAverageAgents() {
         // 100 timesteps
         for(int i = 0; i < 100; i++) {            
