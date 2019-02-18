@@ -6,7 +6,7 @@ The nature of the payout for each pool at the end of a timestep can be summarize
 * High: 25% chance of $80 (divided by number of agents in pool); 75% chance of P0
 * Low: 50% chance of $40 (divided by number of agents in pool); 50% chance of P0
 
-For this project, various different algorithms have been constructed, each of which largely defines how the decision-making process for agents functions across all time steps. Observations regarding these algorithms are discussed in the succeeding sections below.
+For this project, various different algorithms have been constructed, each of which largely defines how the decision-making process for agents functions across all time steps. Observations regarding these algorithms are discussed in the succeeding sections below. Note that each algorithm has been run 5 times.
 
 # Highest Average Earnings
 
