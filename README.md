@@ -16,7 +16,7 @@ Analyzing this algorithm, a "bandwagon" pattern with little variation was record
 
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/A1.PNG)
 
-After this series of tests, we then wanted to observe what behaviors would be observed when more variation was factored into the decision-making process. Hence, the algorithm was altered such that an agent had a 75% chance of utilizing the aforementioned highest average earnings algorithm and a 25% chance of selecting randomly. This was also attempted to verify whether alternating between selecting the pool with highest average earnings and a random (and potentially less-populated) pool might potentially increase earnings. Ultimately, this produced a much more varied range of results in terms of final average earnings.
+After this series of tests, we then wanted to observe what behaviors would be observed when more variation was factored into the decision-making process. Hence, the algorithm was altered such that an agent had a 75% chance of utilizing the aforementioned highest average earnings algorithm and a 25% chance of selecting randomly. This was also attempted to verify whether alternating between selecting the pool with highest average earnings and a random (and potentially less-populated) pool might potentially increase earnings. Ultimately, this produced a much more varied range of results in terms of final average earnings, though this did not result in significantly increased or decreased earnings.
 
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/A2.PNG)
 
@@ -32,6 +32,11 @@ Analyzing this algorithm, certain patterns were evident; somewhat similarly to t
 # Least Agents
 
 Utilizing the least agents algorithm, an agent determines a pool based on whichever pool contained the least agents at the end of the immediately preceding step; hence, this constitutes an algorithm which is more greedy in nature.
+
+Analyzing this algorithm, it was observed that the algorithm performed somewhat similarly to the lowest average agents, in the sense that low overall average final earnings were recorded among the vast majority of the agents by the end of the 100th timestep for all five runs, as a result of tau deductions and lowered payouts due to pool congestion. This was particularly evident when tau was reduced from 2 to 1, which resulted in increased final earnings. The introduction of randomization to the algorithm (maintaining the same 75% - 25% chance utilized with the previous algorithms) resulted in a fluctuating range of recorded final earnings. It was also observed that a more substantial percentage of agents were able to register final earnings  higher than the $20 mark, which could also be attributed to a reduced need to spend tau, similarly to when randomization was applied to the lowest average agents algorithm.
+
+![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C1.PNG)
+![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C2.PNG)
 
 # Randomized
 
