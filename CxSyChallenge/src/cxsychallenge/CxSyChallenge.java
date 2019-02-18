@@ -1,7 +1,13 @@
 package cxsychallenge;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * CxSy Challenge
@@ -14,6 +20,8 @@ public class CxSyChallenge {
     private static int[] agents = new int[50];
     private static int[] agentsCurrentPools = new int[50];
     private static float[] agentsCurrentEarnings = new float[50];
+    private static String[][] agentsEarningsPerTimeStep = new String[101][50];
+    private static String[][] agentsTotalEarningsPerTimeStep = new String[101][50];
 
     // pools and their respective attributes
     private static ArrayList pools[] = new ArrayList[3];
@@ -43,19 +51,44 @@ public class CxSyChallenge {
         
         for(int i = 0; i < 50; i++) {
             agentsCurrentEarnings[i] = 0;
-        }        
+        }
+        
+        for(int j = 0; j < 50; j++){
+            agentsTotalEarningsPerTimeStep[0][j] = "Agent " + (j+1);
+        }
+        
+        for(int i = 0; i < 100; i++){
+            for(int j = 1; j < 50; j++){
+                agentsTotalEarningsPerTimeStep[i+1][j] = "";
+            }
+        }
         
         // run algorithm 5 times
         for(int i = 0; i < 1; i++) {
 //            uncomment algorithm to be tested 
 //            SelectLeastAgents();
-            SelectLeastAgentsOrRandom();
+//            SelectLeastAgentsOrRandom();
 //            SelectLowestAverageAgents();
 //            SelectLowestAverageAgentsOrRandom();
 //            SelectHighestAverageEarnings();
 //            SelectHighestAverageEarningsOrRandom();
-//            SelectRandomPools();            
+            SelectRandomPools();            
         }
+        
+        for(int j = 0; j < 50; j++){
+            System.out.print(agentsTotalEarningsPerTimeStep[0][j]);
+        }
+        
+        System.out.println("");
+        
+        for(int i = 0; i < 100; i++){
+            for(int j = 0; j < 50; j++){
+                System.out.print("$"+agentsTotalEarningsPerTimeStep[i+1][j]+" ");
+            }
+            System.out.println("");
+        }
+        
+        writeCsv(agentsTotalEarningsPerTimeStep);
                 
     }
 
@@ -141,6 +174,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             // summary
@@ -249,6 +283,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             stableAllEarnings.add(stableEarnings);
@@ -337,6 +372,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             // summary
@@ -426,7 +462,10 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
+            
             
             stableAllEarnings.add(stableEarnings);
             highAllEarnings.add(highEarnings);
@@ -510,6 +549,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             stableAllEarnings.add(stableEarnings);
@@ -603,6 +643,7 @@ public class CxSyChallenge {
                     }                    
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             stableAllEarnings.add(stableEarnings);
@@ -669,6 +710,7 @@ public class CxSyChallenge {
                     }                   
                     agentsCurrentEarnings[j] += lowEarnings;
                 }
+                agentsTotalEarningsPerTimeStep[i+1][j] = ""+agentsCurrentEarnings[j];
             }
             
             // summary
@@ -708,5 +750,25 @@ public class CxSyChallenge {
 //        System.out.print(array.size() + " ");
 //        System.out.print(average + " ");
         return average;
+    }
+    
+    private static void writeCsv(String[][] toSave){
+        
+        try(PrintWriter writer  = new PrintWriter(new File("SelectRandomPools.csv"))){
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < 101; i++){
+                for(int j = 0; j < 50; j++){
+                    sb.append(toSave[i][j]);
+                    sb.append(",");
+                }
+                sb.append("\n");
+            }
+            
+            writer.write(sb.toString());
+            
+        }catch(FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        
     }
 }
