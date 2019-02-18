@@ -37,7 +37,3 @@ Analyzing this algorithm, it was observed that the algorithm performed somewhat 
 
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C1.PNG)
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C2.PNG)
-
-# Randomized
-
-Utilizing the randomized algorithm, an agent determines a pool without any set rules; that is, based on a random selection of the 3 pools.
