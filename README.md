@@ -37,3 +37,9 @@ Analyzing this algorithm, it was observed that the algorithm performed somewhat 
 
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C1.PNG)
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/C2.PNG)
+
+# Conclusions
+
+Overall, it can be concluded that the consistent adherence to explicitly-set rules across all timesteps may have ultimately resulted in lower agent earnings, which is perhaps indicative of the apparent unsuitability of extremely rigid algorithms to simulate agent behaviors in these cases. This was also supported by the relatively low average earnings observed during test runs relying entirely on set rules to determine agent choice as compared to test runs utilizing both rule-based and randomized decision-making.
+
+We would suggest that for future simulations of this scenario, tests could be run in which different groups of agents each utilize a different decision-making algorithm (rule-based, randomized, and a mixture of the two) within the same 100-timestep-test run, so as to compare whether certain groups registered higher earnings over others. Additionally, we could perhaps further explore more dynamic decision-making in which agents switch between different decision-making algorithms over the course of a single test run, this time based on defined conditions (i.e. if agent's earnings have declined for consecutive timesteps) instead of the 75%-25% probability of switching algorithms explored in this project.
