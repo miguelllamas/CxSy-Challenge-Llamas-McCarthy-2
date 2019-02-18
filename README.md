@@ -12,9 +12,13 @@ For this project, various different algorithms have been constructed, each of wh
 
 Utilizing the highest average earnings algorithm, an agent selects a pool based on the average of the pool's final payouts over all preceding steps, with the pool with the highest average being selected.
 
-Analyzing this algorithm, a "bandwagon" pattern was recorded in the sense that over the five runs, it was observable that by no more than the fifth step, all agents had transferred to a single pool, remaining in this pool until such point that the lack of agents in the other two pools would result in their average earnings gradually increasing, followed by a sudden shift by all agents towards the pool with the new highest average earnings. Final earnings by the 100th timestep (averaged from all five test runs) using this algorithm for the 50 agents recorded no major variations, with all averages falling squarely within the low 90s-low 100s range.
+Analyzing this algorithm, a "bandwagon" pattern with little variation was recorded in the sense that over the five runs, it was observable that by no more than the fifth step, all agents had transferred to a single pool, remaining in this pool until such point that the lack of agents in the other two pools would result in their average earnings gradually increasing, followed by a sudden shift by all agents towards the pool with the new highest average earnings. It was also observable that by the point that the agents had a reached a more stable state, their average earnings maintained a steady upward increase. Final earnings by the 100th timestep (averaged from all five test runs) using this algorithm for the 50 agents recorded no major variations, with all averages falling squarely within the low 90s-low 100s range.
 
 ![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/A1.PNG)
+
+After this series of tests, we then wanted to observe what behaviors would be observed when more variation was factored into the decision-making process. Hence, the algorithm was altered such that an agent had a 75% chance of utilizing the aforementioned highest average earnings algorithm and a 25% chance of selecting randomly. This was also attempted to verify whether alternating between selecting the pool with highest average earnings and a random (and potentially less-populated) pool might potentially increase earnings. Ultimately, this produced a much more varied range of results in terms of final average earnings.
+
+![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/A2.PNG)
 
 # Lowest Average Agents
 
