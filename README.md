@@ -10,9 +10,11 @@ For this project, various different algorithms have been constructed, each of wh
 
 # Highest Average Earnings
 
-Utilizing the highest average earnings algorithm, an agent determines a pool based on the average of the pool's final payouts over all preceding steps, with the pool with the highest average being selected.
+Utilizing the highest average earnings algorithm, an agent selects a pool based on the average of the pool's final payouts over all preceding steps, with the pool with the highest average being selected.
 
-<!-- ![Imgur Image](http://i.imgur.com/zTONrOD.jpg)-->
+Analyzing this algorithm, a "bandwagon" pattern was recorded in the sense that over the five runs, it was observable that by no more than the fifth step, all agents had transferred to a single pool, remaining in this pool until such point that the lack of agents in the other two pools would result in their average earnings gradually increasing, followed by a sudden shift by all agents towards the pool with the new highest average earnings. Final earnings by the 100th timestep (averaged from all five test runs) using this algorithm for the 50 agents recorded no major variations, with all averages falling squarely within the low 90s-low 100s range.
+
+![Image](https://raw.githubusercontent.com/miguelllamas/CxSy-Challenge-Llamas-McCarthy-2/master/A1.PNG)
 
 # Lowest Average Agents
 
